@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "how-well-do-you-know-me-backend"
+version = "0.1.0"
+description = "a quiz game"
+authors = ["mamta gupta"]
+readme = "README.md"
+packages = [{include = "how_well_do_you_know_me_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.24.0.post1"
+fastapi = "^0.105.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
