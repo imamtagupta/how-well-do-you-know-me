@@ -11,6 +11,7 @@ def read_root():
         'message': 'Hello World'
         }
 
+
 # Run the application using Uvicorn
 if __name__ == "__main__":
     import uvicorn
