@@ -23,6 +23,15 @@ class Questions(BaseModel):
     title: str
     descriptions: str
 
+class Options(BaseModel):
+    id: int
+    type: str
+    value: str
+
+class QuestionOptionsAssociation(BaseModel):
+    id: int
+    qid: int
+    oid: int
 
 # Define a basic route
 @app.get('/')
@@ -46,9 +55,11 @@ def get_questions():
         'data': questions
         }
 
-# @app.post('/options')
-# def post_options():
-    
+@app.post('/options')
+def post_options(req_data: Options):
+    print(req_data)
+    options.append(req_data)
+    return req_data
     
 @app.get('/options')
 def get_options():
@@ -58,13 +69,18 @@ def get_options():
         }
 
 
+@app.post('/question_options')
+def post_options(req_data: QuestionOptionsAssociation):
+    print(req_data)
+    questions_options.append(req_data)
+    return req_data
+
 @app.get('/question_options')
 def get_question_options_ass():
     return {
         'success': True,
         'data': questions_options
         }
-
 
 
 # Run the application using Uvicorn
