@@ -70,7 +70,7 @@ def get_options():
 
 
 @app.post('/question_options')
-def post_options(req_data: QuestionOptionsAssociation):
+def post_question_options_ass(req_data: QuestionOptionsAssociation):
     print(req_data)
     questions_options.append(req_data)
     return req_data
