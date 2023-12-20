@@ -9,8 +9,6 @@ app = FastAPI()
 with open("data.json") as json_file:
     file_contents = json_file.read()
 
-print(file_contents)
-
 parsed_json = json.loads(file_contents)
 
 questions = parsed_json["sample_question"]
