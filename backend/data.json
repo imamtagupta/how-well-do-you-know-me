@@ -1,0 +1,78 @@
+{
+    "sample_options" : [
+        {
+            "id": 1,
+            "type": "mcq",
+            "value": "Paris"
+        },
+        {
+            "id": 2,
+            "type": "mcq",
+            "value": "Berlin"
+        },
+        {
+            "id": 3,
+            "type": "mcq",
+            "value": "Madrid"
+        },
+        {
+            "id": 4,
+            "type": "mcq",
+            "value": "Rome"
+        },
+        {
+            "id": 5,
+            "type": "boolean",
+            "value": "True"
+        },
+        {
+            "id": 6,
+            "type": "boolean",
+            "value": "False"
+        },
+        {
+            "id": 7,
+            "type": "mcq",
+            "value": "Red"
+        },
+        {
+            "id": 8,
+            "type": "mcq",
+            "value": "Green"
+        },
+        {
+            "id": 9,
+            "type": "mcq",
+            "value": "Black"
+        },
+        {
+            "id": 10,
+            "type": "mcq",
+            "value": "White"
+        }
+    ],
+    "sample_question": [
+        {
+            "id": 1,
+            "title": "What is the capital of France?",
+            "description": "Select the correct option."
+        },
+        {
+            "id": 2,
+            "title": "Earth is the third planet from the sun.",
+            "description": "Select True or False."
+        },
+        {
+            "id": 3,
+            "title": "Which of the following is a primary color?",
+            "description": "Select the correct option."
+        }
+    ],
+    "sample_question_options_association": [
+        {
+            "id": 1,
+            "question": 1,
+            "options": 3
+        }
+    ]
+}
