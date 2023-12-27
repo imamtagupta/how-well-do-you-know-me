@@ -74,5 +74,9 @@
             "question": 1,
             "options": 3
         }
+    ],
+    "user_answers":  [
+      ],
+    "friend_answers": [
     ]
 }
