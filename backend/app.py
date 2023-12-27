@@ -14,7 +14,8 @@ parsed_json = json.loads(file_contents)
 questions = parsed_json["sample_question"]
 options = parsed_json["sample_options"]
 questions_options = parsed_json["sample_question_options_association"]
-
+user_answers = parsed_json["user_answers"]
+friend_answers = parsed_json["friend_answers"]
 
 class Questions(BaseModel):
     id: int
@@ -31,6 +32,20 @@ class QuestionOptionsAssociation(BaseModel):
     qid: int
     oid: int
 
+class UserAnswers(BaseModel):
+    uid: int
+    qid: int
+    oid: int
+    
+class FriendAnswers(BaseModel):
+    id: int
+    qid: int
+    oid: int
+    uid: int
+    fid: int 
+
+    
+    
 # Define a basic route
 @app.get('/')
 def read_root():
@@ -75,6 +90,39 @@ def get_question_options_ass():
     return {
         'success': True,
         'data': questions_options
+        }
+    
+    
+@app.post('/user_answers')
+def post_user_answers(req_data: UserAnswers):
+    user_answers.append(req_data)
+    return {
+        'success': True,
+        'data': req_data
+        }
+
+@app.get('/user_answers')
+def get_user_answers():
+    data: UserAnswers = user_answers
+    return {
+        'success': True,
+        'data': data
+        }
+
+@app.post('/friend_answers')
+def post_friend_answers(req_data: FriendAnswers):
+    friend_answers.append(req_data)
+    return {
+        'success': True,
+        'data': req_data
+        }
+
+@app.get('/friend_answers')
+def get_friend_answers():
+    data: FriendAnswers = friend_answers
+    return {
+        'success': True,
+        'data': data
         }
 
 
