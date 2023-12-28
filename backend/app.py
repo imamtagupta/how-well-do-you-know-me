@@ -57,9 +57,11 @@ def read_root():
 @app.post('/questions')
 def create_questions(req_data: Questions):
     questions.append(req_data)
-    return req_data
-    
-    
+    return {
+        'success': True,
+        'data': req_data
+        }
+
 @app.get('/questions')
 def get_questions():
     return {
@@ -70,7 +72,10 @@ def get_questions():
 @app.post('/options')
 def post_options(req_data: Options):
     options.append(req_data)
-    return req_data
+    return {
+        'success': True,
+        'data': req_data
+        }
     
 @app.get('/options')
 def get_options():
@@ -79,19 +84,20 @@ def get_options():
         'data': options
         }
 
-
 @app.post('/question_options')
 def post_question_options_ass(req_data: QuestionOptionsAssociation):
     questions_options.append(req_data)
-    return req_data
-
+    return {
+        'success': True,
+        'data': req_data
+        }
+    
 @app.get('/question_options')
 def get_question_options_ass():
     return {
         'success': True,
         'data': questions_options
         }
-    
     
 @app.post('/user_answers')
 def post_user_answers(req_data: UserAnswers):
