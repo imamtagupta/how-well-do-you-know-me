@@ -133,7 +133,6 @@ def get_friend_answers():
     
 @app.get('/connection_score')
 def get_connection_score(uid:int, fid:int):
-
     current_user_answers: UserAnswers = [x for x in user_answers if x.uid == uid]
     current_friend_answers: FriendAnswers = [x for x in friend_answers if x.uid == uid and x.fid == fid]
 
