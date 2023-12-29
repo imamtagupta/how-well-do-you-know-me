@@ -83,7 +83,7 @@ def login(username: str):
 
 # Defined a basic route
 @app.get('/')
-def read_root():
+def read_root(current_user = Depends(verify_jwt_token)):
     return {
         'success': True,
         'data': 'Hello World'
