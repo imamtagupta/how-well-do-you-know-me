@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import json
+import jwt
 
 # Create an instance of the FastAPI class
 app = FastAPI()
@@ -44,11 +46,44 @@ class FriendAnswers(BaseModel):
     uid: int
     fid: int 
 
+# Secret key used to encode/decode JWT tokens
+SECRET_KEY = 'do?you?know?me!'
+bearer_scheme = HTTPBearer()
+
+def create_jwt_token(username):
+    payload = {
+        'username': username,
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    return token
     
+
+def verify_jwt_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme)):
+    token = credentials.credentials
+    try:
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        return decoded_token
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+# Defined login route
+@app.get('/login')
+def login(username: str):
+    token = create_jwt_token(username)
+    return {
+        'success': True,
+        'data': {
+            'username': username,
+            'token': token
+            }
+        }
     
-# Define a basic route
+
+# Defined a basic route
 @app.get('/')
-def read_root():
+def read_root(current_user = Depends(verify_jwt_token)):
     return {
         'success': True,
         'data': 'Hello World'
