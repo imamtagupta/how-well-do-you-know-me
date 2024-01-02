@@ -29,3 +29,5 @@
 
 
     ```
+- run fastAPI app using `uvicorn app:app --reload` which will result into stating few prints that `app is running on port 8000`
+- redirect yourself to hit the link http://localhost:8000. and which will show the response content being designed in root route.
