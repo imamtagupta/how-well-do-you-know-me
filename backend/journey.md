@@ -33,3 +33,4 @@
 - redirect yourself to hit the link http://localhost:8000. and which will show the response content being designed in root route.
 - once you see everything working fine you can go to link http://localhost:8000/doc and for detailed description on rest endpoints we can utilise http://localhost:8000/redoc
 - login endpoints will help to receive to authorized token and which will help to update the authorization tab to enable the authentication of all endpoints.
+
