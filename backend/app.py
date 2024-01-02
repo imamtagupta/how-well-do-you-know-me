@@ -88,9 +88,10 @@ def read_root(current_user = Depends(verify_jwt_token)):
         'success': True,
         'data': 'Hello World'
         }
-    
+
+
 @app.post('/questions')
-def create_questions(req_data: Questions):
+def create_questions(req_data: Questions, current_user = Depends(verify_jwt_token)):
     questions.append(req_data)
     return {
         'success': True,
@@ -98,14 +99,14 @@ def create_questions(req_data: Questions):
         }
 
 @app.get('/questions')
-def get_questions():
+def get_questions(current_user = Depends(verify_jwt_token)):
     return {
         'success': True,
         'data': questions
         }
 
 @app.post('/options')
-def post_options(req_data: Options):
+def post_options(req_data: Options, current_user = Depends(verify_jwt_token)):
     options.append(req_data)
     return {
         'success': True,
@@ -113,14 +114,14 @@ def post_options(req_data: Options):
         }
     
 @app.get('/options')
-def get_options():
+def get_options(current_user = Depends(verify_jwt_token)):
     return {
         'success': True,
         'data': options
         }
 
 @app.post('/question_options')
-def post_question_options_ass(req_data: QuestionOptionsAssociation):
+def post_question_options_ass(req_data: QuestionOptionsAssociation, current_user = Depends(verify_jwt_token)):
     questions_options.append(req_data)
     return {
         'success': True,
@@ -128,14 +129,14 @@ def post_question_options_ass(req_data: QuestionOptionsAssociation):
         }
     
 @app.get('/question_options')
-def get_question_options_ass():
+def get_question_options_ass(current_user = Depends(verify_jwt_token)):
     return {
         'success': True,
         'data': questions_options
         }
     
 @app.post('/user_answers')
-def post_user_answers(req_data: UserAnswers):
+def post_user_answers(req_data: UserAnswers, current_user = Depends(verify_jwt_token)):
     user_answers.append(req_data)
     return {
         'success': True,
@@ -143,7 +144,7 @@ def post_user_answers(req_data: UserAnswers):
         }
 
 @app.get('/user_answers')
-def get_user_answers():
+def get_user_answers(current_user = Depends(verify_jwt_token)):
     data: UserAnswers = user_answers
     return {
         'success': True,
@@ -151,7 +152,7 @@ def get_user_answers():
         }
 
 @app.post('/friend_answers')
-def post_friend_answers(req_data: FriendAnswers):
+def post_friend_answers(req_data: FriendAnswers, current_user = Depends(verify_jwt_token)):
     friend_answers.append(req_data)
     return {
         'success': True,
@@ -159,7 +160,7 @@ def post_friend_answers(req_data: FriendAnswers):
         }
 
 @app.get('/friend_answers')
-def get_friend_answers():
+def get_friend_answers(current_user = Depends(verify_jwt_token)):
     data: FriendAnswers = friend_answers
     return {
         'success': True,
@@ -167,7 +168,7 @@ def get_friend_answers():
         }
     
 @app.get('/connection_score')
-def get_connection_score(uid:int, fid:int):
+def get_connection_score(uid:int, fid:int, current_user = Depends(verify_jwt_token)):
     current_user_answers: UserAnswers = [x for x in user_answers if x.uid == uid]
     current_friend_answers: FriendAnswers = [x for x in friend_answers if x.uid == uid and x.fid == fid]
 
