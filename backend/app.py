@@ -1,6 +1,8 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
+from uuid import UUID
+import uuid
 import json
 import jwt
 
@@ -19,32 +21,37 @@ questions_options = parsed_json["sample_question_options_association"]
 user_answers = parsed_json["user_answers"]
 friend_answers = parsed_json["friend_answers"]
 
+
+class QuestionRequest(BaseModel):
+    title: str
+    descriptions: str
+    
 class Questions(BaseModel):
-    id: int
+    id: UUID
     title: str
     descriptions: str
 
 class Options(BaseModel):
-    id: int
+    id: UUID
     type: str
     value: str
 
 class QuestionOptionsAssociation(BaseModel):
-    id: int
-    qid: int
-    oid: int
+    id: UUID
+    qid: UUID
+    oid: UUID
 
 class UserAnswers(BaseModel):
-    uid: int
-    qid: int
-    oid: int
+    uid: UUID
+    qid: UUID
+    oid: UUID
     
 class FriendAnswers(BaseModel):
-    id: int
-    qid: int
-    oid: int
-    uid: int
-    fid: int 
+    id: UUID
+    qid: UUID
+    oid: UUID
+    uid: UUID
+    fid: UUID 
 
 # Secret key used to encode/decode JWT tokens
 SECRET_KEY = 'do?you?know?me!'
