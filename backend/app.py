@@ -103,20 +103,18 @@ def read_root(current_user = Depends(verify_jwt_token)):
         }
 
 
-@app.post('/questions')
-def create_questions(req_data: Questions, current_user = Depends(verify_jwt_token)):
+@app.post('/questions', response_model = Questions)
+def create_questions(req_data: QuestionRequest,
+                     current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     questions.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
 
-@app.get('/questions')
+@app.get('/questions', response_model = list[Questions])
 def get_questions(current_user = Depends(verify_jwt_token)):
-    return {
-        'success': True,
-        'data': questions
-        }
+    return questions
+
 
 @app.post('/options')
 def post_options(req_data: Options, current_user = Depends(verify_jwt_token)):
