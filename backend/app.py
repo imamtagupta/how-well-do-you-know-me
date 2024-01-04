@@ -1,6 +1,8 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
+from uuid import UUID
+import uuid
 import json
 import jwt
 
@@ -13,38 +15,63 @@ with open("data.json") as json_file:
 
 parsed_json = json.loads(file_contents)
 
-questions = parsed_json["sample_question"]
-options = parsed_json["sample_options"]
-questions_options = parsed_json["sample_question_options_association"]
-user_answers = parsed_json["user_answers"]
-friend_answers = parsed_json["friend_answers"]
+# questions = parsed_json["sample_question"]
+# options = parsed_json["sample_options"]
+# questions_options = parsed_json["sample_question_options_association"]
+# user_answers = parsed_json["user_answers"]
+# friend_answers = parsed_json["friend_answers"]
 
+
+questions = [] 
+options = [] 
+questions_options = [] 
+user_answers = [] 
+friend_answers = [] 
+
+class QuestionRequest(BaseModel):
+    title: str
+    descriptions: str
+    
 class Questions(BaseModel):
-    id: int
+    id: UUID
     title: str
     descriptions: str
 
 class Options(BaseModel):
-    id: int
+    id: UUID
+    type: str
+    value: str
+    
+class OptionsRequest(BaseModel):
     type: str
     value: str
 
 class QuestionOptionsAssociation(BaseModel):
-    id: int
-    qid: int
-    oid: int
+    id: UUID
+    qid: UUID
+    oid: UUID
+    
+class QuestionOptionsAssociationRequest(BaseModel):
+    qid: UUID
+    oid: UUID
 
 class UserAnswers(BaseModel):
-    uid: int
-    qid: int
-    oid: int
+    id: UUID
+    uid: UUID
+    qid: UUID
+    oid: UUID
+
+class UserAnswersRequest(BaseModel):
+    uid: UUID
+    qid: UUID
+    oid: UUID
     
 class FriendAnswers(BaseModel):
-    id: int
-    qid: int
-    oid: int
-    uid: int
-    fid: int 
+    id: UUID
+    qid: UUID
+    oid: UUID
+    uid: UUID
+    fid: UUID 
 
 # Secret key used to encode/decode JWT tokens
 SECRET_KEY = 'do?you?know?me!'
@@ -90,66 +117,52 @@ def read_root(current_user = Depends(verify_jwt_token)):
         }
 
 
-@app.post('/questions')
-def create_questions(req_data: Questions, current_user = Depends(verify_jwt_token)):
+@app.post('/questions', response_model = Questions)
+def create_questions(req_data: QuestionRequest,
+                     current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     questions.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
 
-@app.get('/questions')
+@app.get('/questions', response_model = list[Questions])
 def get_questions(current_user = Depends(verify_jwt_token)):
-    return {
-        'success': True,
-        'data': questions
-        }
+    return questions
 
-@app.post('/options')
-def post_options(req_data: Options, current_user = Depends(verify_jwt_token)):
+
+@app.post('/options', response_model=Options)
+def post_options(req_data: OptionsRequest, current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     options.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
     
-@app.get('/options')
+@app.get('/options', response_model=list[Options])
 def get_options(current_user = Depends(verify_jwt_token)):
-    return {
-        'success': True,
-        'data': options
-        }
+    return options
 
-@app.post('/question_options')
-def post_question_options_ass(req_data: QuestionOptionsAssociation, current_user = Depends(verify_jwt_token)):
+@app.post('/question_options', response_model=QuestionOptionsAssociation)
+def post_question_options_ass(req_data: QuestionOptionsAssociationRequest, 
+                              current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     questions_options.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
     
-@app.get('/question_options')
+@app.get('/question_options', response_model=list[QuestionOptionsAssociation])
 def get_question_options_ass(current_user = Depends(verify_jwt_token)):
-    return {
-        'success': True,
-        'data': questions_options
-        }
+    return questions_options
     
-@app.post('/user_answers')
-def post_user_answers(req_data: UserAnswers, current_user = Depends(verify_jwt_token)):
+@app.post('/user_answers', response_model=UserAnswers)
+def post_user_answers(req_data: UserAnswersRequest, current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     user_answers.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
 
-@app.get('/user_answers')
+@app.get('/user_answers', response_model=list[UserAnswers])
 def get_user_answers(current_user = Depends(verify_jwt_token)):
-    data: UserAnswers = user_answers
-    return {
-        'success': True,
-        'data': data
-        }
+    return user_answers
 
 @app.post('/friend_answers')
 def post_friend_answers(req_data: FriendAnswers, current_user = Depends(verify_jwt_token)):
