@@ -50,6 +50,10 @@ class QuestionOptionsAssociation(BaseModel):
     id: UUID
     qid: UUID
     oid: UUID
+    
+class QuestionOptionsAssociationRequest(BaseModel):
+    qid: UUID
+    oid: UUID
 
 class UserAnswers(BaseModel):
     uid: UUID
@@ -131,20 +135,17 @@ def post_options(req_data: OptionsRequest, current_user = Depends(verify_jwt_tok
 def get_options(current_user = Depends(verify_jwt_token)):
     return options
 
-@app.post('/question_options')
-def post_question_options_ass(req_data: QuestionOptionsAssociation, current_user = Depends(verify_jwt_token)):
+@app.post('/question_options', response_model=QuestionOptionsAssociation)
+def post_question_options_ass(req_data: QuestionOptionsAssociationRequest, 
+                              current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     questions_options.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
     
-@app.get('/question_options')
+@app.get('/question_options', response_model=list[QuestionOptionsAssociation])
 def get_question_options_ass(current_user = Depends(verify_jwt_token)):
-    return {
-        'success': True,
-        'data': questions_options
-        }
+    return questions_options
     
 @app.post('/user_answers')
 def post_user_answers(req_data: UserAnswers, current_user = Depends(verify_jwt_token)):
