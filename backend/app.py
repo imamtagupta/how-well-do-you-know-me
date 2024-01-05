@@ -9,18 +9,10 @@ import jwt
 # Create an instance of the FastAPI class
 app = FastAPI()
 
-
 with open("data.json") as json_file:
     file_contents = json_file.read()
 
 parsed_json = json.loads(file_contents)
-
-# questions = parsed_json["sample_question"]
-# options = parsed_json["sample_options"]
-# questions_options = parsed_json["sample_question_options_association"]
-# user_answers = parsed_json["user_answers"]
-# friend_answers = parsed_json["friend_answers"]
-
 
 questions = [] 
 options = [] 
@@ -68,6 +60,12 @@ class UserAnswersRequest(BaseModel):
     
 class FriendAnswers(BaseModel):
     id: UUID
+    qid: UUID
+    oid: UUID
+    uid: UUID
+    fid: UUID 
+    
+class FriendAnswersRequest(BaseModel):
     qid: UUID
     oid: UUID
     uid: UUID
@@ -164,21 +162,17 @@ def post_user_answers(req_data: UserAnswersRequest, current_user = Depends(verif
 def get_user_answers(current_user = Depends(verify_jwt_token)):
     return user_answers
 
-@app.post('/friend_answers')
-def post_friend_answers(req_data: FriendAnswers, current_user = Depends(verify_jwt_token)):
+@app.post('/friend_answers', response_model=FriendAnswers)
+def post_friend_answers(req_data: FriendAnswersRequest, current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     friend_answers.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
 
-@app.get('/friend_answers')
+@app.get('/friend_answers', response_model=list[UserAnswers])
 def get_friend_answers(current_user = Depends(verify_jwt_token)):
     data: FriendAnswers = friend_answers
-    return {
-        'success': True,
-        'data': data
-        }
+    return friend_answers
     
 @app.get('/connection_score')
 def get_connection_score(uid:int, fid:int, current_user = Depends(verify_jwt_token)):
