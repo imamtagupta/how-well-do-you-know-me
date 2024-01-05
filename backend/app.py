@@ -9,18 +9,10 @@ import jwt
 # Create an instance of the FastAPI class
 app = FastAPI()
 
-
 with open("data.json") as json_file:
     file_contents = json_file.read()
 
 parsed_json = json.loads(file_contents)
-
-# questions = parsed_json["sample_question"]
-# options = parsed_json["sample_options"]
-# questions_options = parsed_json["sample_question_options_association"]
-# user_answers = parsed_json["user_answers"]
-# friend_answers = parsed_json["friend_answers"]
-
 
 questions = [] 
 options = [] 
