@@ -72,6 +72,12 @@ class FriendAnswers(BaseModel):
     oid: UUID
     uid: UUID
     fid: UUID 
+    
+class FriendAnswersRequest(BaseModel):
+    qid: UUID
+    oid: UUID
+    uid: UUID
+    fid: UUID 
 
 # Secret key used to encode/decode JWT tokens
 SECRET_KEY = 'do?you?know?me!'
@@ -164,21 +170,17 @@ def post_user_answers(req_data: UserAnswersRequest, current_user = Depends(verif
 def get_user_answers(current_user = Depends(verify_jwt_token)):
     return user_answers
 
-@app.post('/friend_answers')
-def post_friend_answers(req_data: FriendAnswers, current_user = Depends(verify_jwt_token)):
+@app.post('/friend_answers', response_model=FriendAnswers)
+def post_friend_answers(req_data: FriendAnswersRequest, current_user = Depends(verify_jwt_token)):
+    req_data = req_data.dict()
+    req_data["id"] = uuid.uuid4()
     friend_answers.append(req_data)
-    return {
-        'success': True,
-        'data': req_data
-        }
+    return req_data
 
-@app.get('/friend_answers')
+@app.get('/friend_answers', response_model=list[UserAnswers])
 def get_friend_answers(current_user = Depends(verify_jwt_token)):
     data: FriendAnswers = friend_answers
-    return {
-        'success': True,
-        'data': data
-        }
+    return friend_answers
     
 @app.get('/connection_score')
 def get_connection_score(uid:int, fid:int, current_user = Depends(verify_jwt_token)):
