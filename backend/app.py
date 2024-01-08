@@ -18,7 +18,7 @@ questions = []
 options = [] 
 questions_options = [] 
 user_answers = [] 
-friend_answers = [] 
+friend_answers = []
 
 class QuestionRequest(BaseModel):
     title: str
