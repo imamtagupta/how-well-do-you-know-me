@@ -1,8 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
-from uuid import UUID
-import uuid
 import json
 import jwt
 
@@ -25,12 +23,12 @@ class QuestionRequest(BaseModel):
     descriptions: str
     
 class Questions(BaseModel):
-    id: UUID
+    id: int
     title: str
     descriptions: str
 
 class Options(BaseModel):
-    id: UUID
+    id: int
     type: str
     value: str
     
@@ -39,37 +37,37 @@ class OptionsRequest(BaseModel):
     value: str
 
 class QuestionOptionsAssociation(BaseModel):
-    id: UUID
-    qid: UUID
-    oid: UUID
+    id: int
+    qid: int
+    oid: int
     
 class QuestionOptionsAssociationRequest(BaseModel):
-    qid: UUID
-    oid: UUID
+    qid: int
+    oid: int
 
 class UserAnswers(BaseModel):
-    id: UUID
-    uid: UUID
-    qid: UUID
-    oid: UUID
+    id: int
+    uid: int
+    qid: int
+    oid: int
 
 class UserAnswersRequest(BaseModel):
-    uid: UUID
-    qid: UUID
-    oid: UUID
+    uid: int
+    qid: int
+    oid: int
     
 class FriendAnswers(BaseModel):
-    id: UUID
-    qid: UUID
-    oid: UUID
-    uid: UUID
-    fid: UUID 
+    id: int
+    qid: int
+    oid: int
+    uid: int
+    fid: int 
     
 class FriendAnswersRequest(BaseModel):
-    qid: UUID
-    oid: UUID
-    uid: UUID
-    fid: UUID 
+    qid: int
+    oid: int
+    uid: int
+    fid: int 
 
 # Secret key used to encode/decode JWT tokens
 SECRET_KEY = 'do?you?know?me!'
@@ -119,7 +117,7 @@ def read_root(current_user = Depends(verify_jwt_token)):
 def create_questions(req_data: QuestionRequest,
                      current_user = Depends(verify_jwt_token)):
     req_data = req_data.dict()
-    req_data["id"] = uuid.uuid4()
+    req_data["id"] = 2
     questions.append(req_data)
     return req_data
 
@@ -131,7 +129,7 @@ def get_questions(current_user = Depends(verify_jwt_token)):
 @app.post('/options', response_model=Options)
 def post_options(req_data: OptionsRequest, current_user = Depends(verify_jwt_token)):
     req_data = req_data.dict()
-    req_data["id"] = uuid.uuid4()
+    req_data["id"] = 2
     options.append(req_data)
     return req_data
     
@@ -143,7 +141,7 @@ def get_options(current_user = Depends(verify_jwt_token)):
 def post_question_options_ass(req_data: QuestionOptionsAssociationRequest, 
                               current_user = Depends(verify_jwt_token)):
     req_data = req_data.dict()
-    req_data["id"] = uuid.uuid4()
+    req_data["id"] = 2
     questions_options.append(req_data)
     return req_data
     
@@ -154,7 +152,7 @@ def get_question_options_ass(current_user = Depends(verify_jwt_token)):
 @app.post('/user_answers', response_model=UserAnswers)
 def post_user_answers(req_data: UserAnswersRequest, current_user = Depends(verify_jwt_token)):
     req_data = req_data.dict()
-    req_data["id"] = uuid.uuid4()
+    req_data["id"] = 2
     user_answers.append(req_data)
     return req_data
 
@@ -165,7 +163,7 @@ def get_user_answers(current_user = Depends(verify_jwt_token)):
 @app.post('/friend_answers', response_model=FriendAnswers)
 def post_friend_answers(req_data: FriendAnswersRequest, current_user = Depends(verify_jwt_token)):
     req_data = req_data.dict()
-    req_data["id"] = uuid.uuid4()
+    req_data["id"] = 2
     friend_answers.append(req_data)
     return req_data
 
