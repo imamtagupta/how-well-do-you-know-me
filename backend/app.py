@@ -4,7 +4,6 @@ from pydantic import BaseModel
 import json
 import jwt
 
-# Create an instance of the FastAPI class
 app = FastAPI()
 
 with open("data.json") as json_file:
