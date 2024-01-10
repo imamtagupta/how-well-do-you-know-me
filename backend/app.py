@@ -90,7 +90,6 @@ def verify_jwt_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-# Defined login route
 @app.get('/login')
 def login(username: str):
     token = create_jwt_token(username)
@@ -103,7 +102,6 @@ def login(username: str):
         }
     
 
-# Defined a basic route
 @app.get('/')
 def read_root(current_user = Depends(verify_jwt_token)):
     return {
