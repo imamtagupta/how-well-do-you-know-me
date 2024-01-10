@@ -1,15 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
-import json
 import jwt
 
 app = FastAPI()
-
-with open("data.json") as json_file:
-    file_contents = json_file.read()
-
-parsed_json = json.loads(file_contents)
 
 questions = [] 
 options = [] 
