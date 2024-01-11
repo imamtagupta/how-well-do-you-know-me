@@ -1,16 +1,9 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
-import json
 import jwt
 
-# Create an instance of the FastAPI class
 app = FastAPI()
-
-with open("data.json") as json_file:
-    file_contents = json_file.read()
-
-parsed_json = json.loads(file_contents)
 
 questions = [] 
 options = [] 
@@ -69,7 +62,6 @@ class FriendAnswersRequest(BaseModel):
     uid: int
     fid: int 
 
-# Secret key used to encode/decode JWT tokens
 SECRET_KEY = 'do?you?know?me!'
 bearer_scheme = HTTPBearer()
 
@@ -91,7 +83,6 @@ def verify_jwt_token(credentials: HTTPAuthorizationCredentials = Depends(bearer_
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
-# Defined login route
 @app.get('/login')
 def login(username: str):
     token = create_jwt_token(username)
@@ -104,7 +95,6 @@ def login(username: str):
         }
     
 
-# Defined a basic route
 @app.get('/')
 def read_root(current_user = Depends(verify_jwt_token)):
     return {
