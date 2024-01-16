@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
+from database import Base
 
 app = FastAPI()
 
@@ -93,7 +94,6 @@ def login(username: str):
             'token': token
             }
         }
-    
 
 @app.get('/')
 def read_root(current_user = Depends(verify_jwt_token)):
