@@ -34,3 +34,11 @@
 - once you see everything working fine you can go to link http://localhost:8000/doc and for detailed description on rest endpoints we can utilise http://localhost:8000/redoc
 - login endpoints will help to receive to authorized token and which will help to update the authorization tab to enable the authentication of all endpoints.
 
+
+
+
+- create models.py to update stuff in there
+- do alembic init and update sqlalchemy.url
+- above command will also generate alembic folder having env.py file
+inside that import the Base from model file
+also update the  target_metadata = None to target_metadata = Base.metadata
