@@ -12,6 +12,6 @@ class DevelopmentConfig(BaseSettings):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
-        return f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_URL}/{self.DB_NAME}"
+        return f"postgresql+psycopg2://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_URL}/{self.DB_NAME}"
         
 settings = DevelopmentConfig()
