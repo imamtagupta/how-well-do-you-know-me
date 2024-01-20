@@ -1,21 +1,28 @@
 [tool.poetry]
-name = "how-well-do-you-know-me-backend"
+name = "hwdynm0be"
 version = "0.1.0"
-description = "a quiz game"
-authors = ["mamta gupta"]
+description = ""
+authors = ["imamtagupta <mamtag962000@gmail.com>"]
 readme = "README.md"
-packages = [{include = "how_well_do_you_know_me_backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-uvicorn = "^0.24.0.post1"
-fastapi = "^0.105.0"
-jwt = "^1.3.1"
-pyjwt = "^2.8.0"
-sqlalchemy = "^2.0.25"
-pydantic-settings = "^2.1.0"
-psycopg2-binary = "^2.9.9"
+annotated-types = "0.6.0"
+anyio = "4.2.0"
+click = "8.1.7"
+exceptiongroup = "1.2.0"
+fastapi = "0.109.0"
+h11 = "0.14.0"
+idna = "3.6"
+pydantic = "2.5.3"
+pydantic-core = "2.14.6"
+sniffio = "1.3.0"
+starlette = "0.35.1"
+typing-extensions = "4.9.0"
+uvicorn = "0.26.0"
 psycopg2 = "^2.9.9"
+sqlalchemy = "^2.0.25"
+alembic = "^1.13.1"
 
 
 [build-system]
