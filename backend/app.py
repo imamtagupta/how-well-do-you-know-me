@@ -2,7 +2,6 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
-from database import Base
 
 app = FastAPI()
 

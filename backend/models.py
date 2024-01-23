@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, INTEGER, String
+from sqlalchemy import Column, INTEGER, String, DateTime, ForeignKey
 
 class Questions(Base):
     
@@ -19,4 +19,38 @@ class Options(Base):
     value = Column(String)
     
 class QuestionOptionsAssociation(Base):
-    pass
+    
+    __tablename__ = 'question_option_association'
+    
+    id = Column(INTEGER, primary_key=True, unique=True) 
+    qid = Column(INTEGER, ForeignKey("question.id"))
+    oid = Column(INTEGER, ForeignKey("option.id"))
+    
+    
+class Users(Base):
+    
+    __tablename__ = 'user'
+    
+    id = Column(INTEGER, primary_key=True, unique=True) 
+    username = Column(String)
+    created_at = Column(DateTime)
+    
+class UserAnswer(Base):
+    
+    __tablename__ = 'user_answer'
+    
+    id = Column(INTEGER, primary_key=True, unique=True) 
+    uid = Column(INTEGER, ForeignKey("user.id"))
+    qid = Column(INTEGER, ForeignKey("question.id"))
+    oid = Column(INTEGER, ForeignKey("option.id"))
+    
+    
+class FriendAnswer(Base):
+    
+    __tablename__ = 'friend_answer'
+    
+    id = Column(INTEGER, primary_key=True, unique=True) 
+    uid = Column(INTEGER, ForeignKey("user.id"))
+    qid = Column(INTEGER, ForeignKey("question.id"))
+    oid = Column(INTEGER, ForeignKey("option.id"))
+    fid = Column(INTEGER, ForeignKey("user.id"))
