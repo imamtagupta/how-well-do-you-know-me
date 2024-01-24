@@ -2,9 +2,11 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
+from endpoints import Endpoints
 
 app = FastAPI()
 
+        
 questions = [] 
 options = [] 
 questions_options = [] 
@@ -101,6 +103,10 @@ def read_root(current_user = Depends(verify_jwt_token)):
         'data': 'Hello World'
         }
 
+
+@app.post("/quest")
+def create_quest(req_data: QuestionRequest):
+    return Endpoints.create_question(req_data)
 
 @app.post('/questions', response_model = Questions)
 def create_questions(req_data: QuestionRequest,
