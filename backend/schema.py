@@ -7,6 +7,12 @@ class QuestionRequest(BaseModel):
 
 
 class QuestionsBase(QuestionRequest):
-    id: Optional[int]
+    id: int
 
     
+class OptionsRequest(BaseModel):
+    type: str
+    value: str
+    
+class OptionsBase(OptionsRequest):
+    id: int
