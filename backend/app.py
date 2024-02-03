@@ -2,12 +2,13 @@ from fastapi import Depends, FastAPI, HTTPException, APIRouter
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
-from routes import question, option
+from routes import question, option, question_option_association
 
 app = FastAPI()
        
 app.include_router(question.router, tags=["Questions"])
 app.include_router(option.router, tags=["Options"])
+app.include_router(question_option_association.router, tags=["Questions Options Association"])
 
 questions = [] 
 options = [] 

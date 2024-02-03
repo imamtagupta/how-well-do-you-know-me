@@ -16,3 +16,30 @@ class OptionsRequest(BaseModel):
     
 class OptionsBase(OptionsRequest):
     id: int
+
+
+class QuestionOptionsAssociationRequest(BaseModel):
+    qid: int
+    oid: int
+
+class QuestionOptionsAssociationBase(QuestionOptionsAssociationRequest):
+    id: int
+    
+
+class UserAnswersRequest(BaseModel):
+    uid: int
+    qid: int
+    oid: int
+    
+class UserAnswersBase(UserAnswersRequest):
+    id: int
+
+
+class FriendAnswersRequest(BaseModel):
+    qid: int
+    oid: int
+    uid: int
+    fid: int 
+
+class FriendAnswersBase(FriendAnswersRequest):
+    id: int
