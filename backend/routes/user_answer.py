@@ -6,7 +6,6 @@ from schema import UserAnswersRequest, UserAnswersBase
 
 router = APIRouter()
 
-# CRUD operations for UserAnswer model
 @router.post("/user-answers", response_model=UserAnswersBase)
 async def create_user_answer(user_answer_create: UserAnswersRequest, db: Session = Depends(get_db)):
     db_user_answer = UserAnswer(**user_answer_create.dict())

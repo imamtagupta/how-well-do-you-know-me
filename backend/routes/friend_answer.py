@@ -7,7 +7,6 @@ from schema import FriendAnswersRequest, FriendAnswersBase
 router = APIRouter()
 
 
-# CRUD operations for FriendAnswer model
 @router.post("/friend-answers", response_model=FriendAnswersBase)
 async def create_friend_answer(friend_answer_create: FriendAnswersRequest, db: Session = Depends(get_db)):
     db_friend_answer = FriendAnswer(**friend_answer_create.dict())
