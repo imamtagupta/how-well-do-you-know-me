@@ -17,39 +17,6 @@ user_answers = []
 friend_answers = []
 
 
-# class QuestionOptionsAssociation(BaseModel):
-#     id: int
-#     qid: int
-#     oid: int
-    
-# class QuestionOptionsAssociationRequest(BaseModel):
-#     qid: int
-#     oid: int
-
-# class UserAnswers(BaseModel):
-#     id: int
-#     uid: int
-#     qid: int
-#     oid: int
-
-# class UserAnswersRequest(BaseModel):
-#     uid: int
-#     qid: int
-#     oid: int
-    
-# class FriendAnswers(BaseModel):
-#     id: int
-#     qid: int
-#     oid: int
-#     uid: int
-#     fid: int 
-    
-# class FriendAnswersRequest(BaseModel):
-#     qid: int
-#     oid: int
-#     uid: int
-#     fid: int 
-
 SECRET_KEY = 'do?you?know?me!'
 bearer_scheme = HTTPBearer()
 
