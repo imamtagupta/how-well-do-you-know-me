@@ -2,13 +2,16 @@ from fastapi import Depends, FastAPI, HTTPException, APIRouter
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 import jwt
-from routes import question, option, question_option_association
+from routes import question, option, question_option_association, user_answer, friend_answer, score_calculation
 
 app = FastAPI()
        
 app.include_router(question.router, tags=["Questions"])
 app.include_router(option.router, tags=["Options"])
 app.include_router(question_option_association.router, tags=["Questions Options Association"])
+app.include_router(user_answer.router, tags=["User Answer"])
+app.include_router(friend_answer.router, tags=["Friend Answer"])
+app.include_router(score_calculation.router, tags=["Score Calculation"], prefix="/score")
 
 questions = [] 
 options = [] 
